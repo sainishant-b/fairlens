@@ -3,5 +3,5 @@ uvicorn[standard]
 scikit-learn
 pandas
 numpy
-google-generativeai
+openai
 python-multipart

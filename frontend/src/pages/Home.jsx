@@ -29,7 +29,7 @@ export default function Home() {
         </Card>
         <Card title="3. See the bias">
           Side-by-side scores. Disparity meter. Mitigation playbook.
-          Plain-English explanation from Gemini.
+          Plain-English AI explanation.
         </Card>
       </section>
     </div>

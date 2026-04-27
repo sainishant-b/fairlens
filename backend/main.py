@@ -4,7 +4,7 @@ FairLens FastAPI server.
 Endpoints:
     GET  /health           — liveness probe
     POST /stress-test      — run adversarial bias test on a record
-    POST /explain-bias     — Gemini plain-English explanation of a bias report
+    POST /explain-bias     — LLM plain-English explanation of a bias report
 
 Run from backend/ directory:
     uvicorn main:app --reload
@@ -104,23 +104,28 @@ async def stress_test(payload: dict[str, Any]) -> dict:
 
 @app.post("/explain-bias")
 async def explain_bias(report: dict) -> dict:
-    """Gemini-generated plain-English explanation of a bias_report dict."""
-    api_key = os.environ.get("GEMINI_API_KEY")
+    """LLM plain-English explanation of a bias_report dict (VoidAI / OpenAI-compatible)."""
+    api_key = os.environ.get("VOIDAI_API_KEY")
     if not api_key:
         raise HTTPException(
             status_code=500,
-            detail="GEMINI_API_KEY env var not set on backend.",
+            detail="VOIDAI_API_KEY env var not set on backend.",
         )
 
-    import google.generativeai as genai
+    base_url = os.environ.get("VOIDAI_BASE_URL", "https://api.voidai.app/v1")
+    model_name = os.environ.get("VOIDAI_MODEL", "gpt-5-mini")
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-pro")
+    from openai import OpenAI
+
+    client = OpenAI(api_key=api_key, base_url=base_url)
     prompt = (
         "An AI bias audit found the following results:\n"
         f"{report}\n\n"
         "Explain in 3 sentences what this means for real people affected by this system. "
         "Be direct and specific. No jargon."
     )
-    response = model.generate_content(prompt)
-    return {"explanation": response.text}
+    completion = client.chat.completions.create(
+        model=model_name,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return {"explanation": completion.choices[0].message.content}

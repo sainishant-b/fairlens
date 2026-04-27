@@ -121,7 +121,7 @@ export default function StressTest() {
               disabled={explaining}
               className="bg-gray-900 text-white px-5 py-2 rounded text-sm hover:bg-gray-700 disabled:opacity-50"
             >
-              {explaining ? "Asking Gemini..." : "Explain this bias"}
+              {explaining ? "Asking AI..." : "Explain this bias"}
             </button>
             {explanation && (
               <div className="mt-4 border-l-4 border-gray-900 bg-white p-4 rounded">

@@ -12,5 +12,9 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
-      - key: GEMINI_API_KEY
+      - key: VOIDAI_API_KEY
         sync: false
+      - key: VOIDAI_BASE_URL
+        value: https://api.voidai.app/v1
+      - key: VOIDAI_MODEL
+        value: gpt-5-mini
