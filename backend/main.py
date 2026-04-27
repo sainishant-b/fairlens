@@ -124,8 +124,14 @@ async def explain_bias(report: dict) -> dict:
         "Explain in 3 sentences what this means for real people affected by this system. "
         "Be direct and specific. No jargon."
     )
-    completion = client.chat.completions.create(
-        model=model_name,
-        messages=[{"role": "user", "content": prompt}],
-    )
+    try:
+        completion = client.chat.completions.create(
+            model=model_name,
+            messages=[{"role": "user", "content": prompt}],
+        )
+    except Exception as exc:
+        raise HTTPException(
+            status_code=502,
+            detail=f"LLM call failed via {base_url} (model={model_name}): {type(exc).__name__}: {exc}",
+        )
     return {"explanation": completion.choices[0].message.content}
