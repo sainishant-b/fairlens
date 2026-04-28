@@ -24,6 +24,23 @@ export default function StressTest() {
   const [model, setModel] = useState("hiring");
   const [attribute, setAttribute] = useState("name");
 
+  const getSubtitle = () => {
+    switch (model) {
+      case "hiring":
+        return "Identical application. Different name. Watch the AI decide.";
+      case "loan":
+        return "Same financials. Different demographics. See the loan approval disparity.";
+      case "college":
+        return "Same grades and test scores. Different background. Who gets admitted?";
+      case "housing":
+        return "Same income. Different zip code. Who gets the mortgage? (Warning: High Bias)";
+      case "insurance":
+        return "Same driving record. Different gender. How do the premiums change?";
+      default:
+        return "Identical records with one protected attribute changed. Watch the AI decide.";
+    }
+  };
+
   async function runTest() {
     setLoading(true);
     setError(null);
@@ -69,9 +86,7 @@ export default function StressTest() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
       <h1 className="text-3xl font-bold mb-2">Adversarial Bias Stress Test</h1>
-      <p className="text-gray-500 mb-6">
-        Identical application. Different name. Watch the AI decide.
-      </p>
+      <p className="text-gray-500 mb-6">{getSubtitle()}</p>
 
       <div className="flex flex-wrap gap-3 mb-8">
         <select
@@ -81,6 +96,9 @@ export default function StressTest() {
         >
           <option value="hiring">Hiring Model</option>
           <option value="loan">Loan Approval Model</option>
+          <option value="college">College Admissions Model</option>
+          <option value="housing">Housing Approval Model</option>
+          <option value="insurance">Auto Insurance Model</option>
         </select>
 
         <select
