@@ -3,7 +3,7 @@ import { Client, Account, Databases, ID } from "appwrite";
 const projectId = import.meta.env.VITE_APPWRITE_PROJECT_ID;
 
 const client = new Client()
-  .setEndpoint("https://cloud.appwrite.io/v1")
+  .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT || "https://nyc.cloud.appwrite.io/v1")
   .setProject(projectId || "");
 
 export const account = new Account(client);
