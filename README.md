@@ -31,7 +31,7 @@ npm run dev
 - FastAPI, scikit-learn — hosted on Render
 - React, Vite, TailwindCSS — hosted on Appwrite Sites
 - Appwrite Auth + Database — audit history storage
-- VoidAI (OpenAI-compatible) for plain-English bias explanations
+- VoidAI Gemini-flash-2.5 (Gemini-compatible) for plain-English bias explanations
 
 ## Repo Layout
 - `backend/` — FastAPI + bias engine + ML models
